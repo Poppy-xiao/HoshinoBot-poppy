@@ -52,15 +52,15 @@ async def novelai_drawImg(bot, ev):
         im = Image.open(BytesIO(i)) 
         img = cv2.cvtColor(numpy.asarray(im),cv2.COLOR_RGB2BGR)[:,:,[2,1,0]]  
         size = img.shape 
-        if size[0]< 512 or size[1] < 512:
+        if size[0]< 128 or size[1] < 128:
             if (size[0] < size[1]):
                 hight = 128 
                 width = float(size[1]) / float(size[0]) * hight 
-                img = cv2.resize(img,[width,int(hight)])
+                img = cv2.resize(img,[int(width),int(hight)])
             else:
                 width = 128 
                 hight = float(size[0]) / float(size[1]) * width 
-                img = cv2.resize(img,[width,int(hight)])
+                img = cv2.resize(img,[int(width),int(hight)])
         size = img.shape 
         datetime = calendar.timegm(time.gmtime())
         img_name= str(datetime)+'.png' 

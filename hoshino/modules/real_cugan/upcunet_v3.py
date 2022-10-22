@@ -277,7 +277,7 @@ class UpCunet2x(nn.Module):
                 crop_size_h=((h0-1)//4*4+4)//2#减半后能被2整除，所以要先被4整除
                 crop_size_w=(w0-1)//2*2+2#能被2整除
             crop_size=(crop_size_h,crop_size_w)
-        elif(tile_mode>=2):
+        elif(tile_mode>=2): 
             tile_mode=min(min(h0,w0)//128,int(tile_mode))#最小短边为128*128
             t2=tile_mode*2
             crop_size=(((h0-1)//t2*t2+t2)//tile_mode,((w0-1)//t2*t2+t2)//tile_mode)
@@ -1299,7 +1299,7 @@ class generateImg():
         ###########inference_img
         import time, cv2,sys,pdb
         from time import time as ttime
-        for weight_path, scale in [("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up2x-latest-denoise3x.pth", 2),("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up3x-latest-denoise3x.pth", 3),("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up4x-latest-denoise3x.pth", 4)]:
+        for weight_path, scale in [("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up2x-latest-denoise3x.pth", 2),("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up3x-latest-denoise3x.pth", 3)]:
             for tile_mode in [0,5]:
                 for cache_mode in [0,1,2,3]:
                     for alpha in [1]:
