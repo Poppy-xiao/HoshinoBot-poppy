@@ -71,11 +71,30 @@ class MoeGoe():
         else:
             return False,text
 
-    def __init__(self,readText,FileName): 
-        self.modelPath  = "E:\\workspace\\HoshinoBot-poppy\\hoshino\\modules\\MoeGoe_plug\\MoeGoe\\yuzi\\365_epochs.pth"
-        self.configPath = "E:\\workspace\\HoshinoBot-poppy\\hoshino\\modules\\MoeGoe_plug\\MoeGoe\\yuzi\\config.json"
-        self.outputPath = "E:\\voice\\" + FileName
+    def __init__(self,id,readText,FileName):  
+        if id <= 6:
+            self.id = id
+            self.modelPath  = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/yuzi/365_epochs.pth"
+            self.configPath = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/yuzi/config.json"
+        elif id <= 14 and id >6:
+            self.id = id - 7
+            self.modelPath  = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/Hamidashi/604_epochs.pth"
+            self.configPath = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/Hamidashi/config.json"
+        elif id <= 40 and id >14:
+            self.id = id - 15
+            self.modelPath  = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/Zeronotsukaima/616_epochs.pth"
+            self.configPath = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/Zeronotsukaima/config.json"
+        elif id <= 53 and id >40:
+            self.id = id - 41
+            self.modelPath  = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/DRACU-RIOT!/639_epochs.pth"
+            self.configPath = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/DRACU-RIOT!/config.json"
+        elif id <= 76 and id >53:
+            self.id = id - 54
+            self.modelPath  = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/CJKS/638_epochs.pth"
+            self.configPath = "/home/poppy/workspace/HoshinoBot-poppy/hoshino/modules/MoeGoe_plug/MoeGoe/CJKS/config.json"
+        self.outputPath = "/home/poppy/voice/" + FileName
         self.readText = readText
+         
     def generate_voice(self):
         if '--escape' in sys.argv:
             escape=True
@@ -108,8 +127,8 @@ class MoeGoe():
             cleaned,text=self.get_label(text,'CLEANED') 
             stn_tst = self.get_text(text, hps_ms, cleaned=cleaned)
             
-            self.print_speakers(speakers,escape)
-            speaker_id = 0
+            # self.print_speakers(speakers,escape)
+            speaker_id = self.id
             out_path = self.outputPath 
             with no_grad():
                 x_tst = stn_tst.unsqueeze(0)

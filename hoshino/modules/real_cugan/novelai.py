@@ -29,7 +29,7 @@ sv = Service(
 save_image_path = R.img('real_cugan').path 
 Path(save_image_path).mkdir(parents = True, exist_ok = True)
 
-@sv.on_fullmatch("ai绘图帮助","AI绘图帮助")
+@sv.on_fullmatch("清晰术帮助")
 async def send_help(bot, ev):
     await bot.send(ev, f'{sv_help}') 
 
@@ -64,7 +64,7 @@ async def novelai_drawImg(bot, ev):
         size = img.shape 
         datetime = calendar.timegm(time.gmtime())
         img_name= str(datetime)+'.png' 
-        save = "E:\\image\\" + img_name # 拼接图片路径  
+        save = "/home/poppy/workspace/image/" + img_name # 拼接图片路径  
         read = "file:///" + save
         generate = generateImg(img)
         result = generate.generate()  

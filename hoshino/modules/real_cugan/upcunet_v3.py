@@ -1299,7 +1299,7 @@ class generateImg():
         ###########inference_img
         import time, cv2,sys,pdb
         from time import time as ttime
-        for weight_path, scale in [("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up2x-latest-denoise3x.pth", 2),("E:\\workspace\\HoshinoBot-poppy\\res\\weights_v3\\up3x-latest-denoise3x.pth", 3)]:
+        for weight_path, scale in [("/home/poppy/workspace/HoshinoBot-poppy/res/weights_v3/up2x-latest-denoise3x.pth", 2),("/home/poppy/workspace/HoshinoBot-poppy/res/weights_v3/up3x-latest-denoise3x.pth", 3)]:
             for tile_mode in [0,5]:
                 for cache_mode in [0,1,2,3]:
                     for alpha in [1]:
