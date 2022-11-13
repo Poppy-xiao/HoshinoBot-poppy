@@ -45,25 +45,26 @@ async def novelai_drawImg(bot, ev):
         if not tag:
             await bot.finish(ev, f"图呢，图呢", at_sender=True)
         else:
-            return 
-    try:
-        search_img = await aiorequests.get(file)
-        i = await search_img.content 
-        im = Image.open(BytesIO(i)) 
-        img = cv2.cvtColor(numpy.asarray(im),cv2.COLOR_RGB2BGR)[:,:,[2,1,0]]  
-        size = img.shape 
-        if size[0] > 1920 or size[1] > 1080:
-            await bot.finish(ev, f"你的图已经很清晰了。", at_sender=True)
-        if size[0]< 128 or size[1] < 128:
-            if (size[0] < size[1]):
-                hight = 128 
-                width = float(size[1]) / float(size[0]) * hight 
-                img = cv2.resize(img,[int(width),int(hight)])
-            else:
-                width = 128 
-                hight = float(size[0]) / float(size[1]) * width 
-                img = cv2.resize(img,[int(width),int(hight)])
-        size = img.shape 
+            return    
+    search_img = await aiorequests.get(file)
+    i = await search_img.content 
+    im = Image.open(BytesIO(i)) 
+    img = cv2.cvtColor(numpy.asarray(im),cv2.COLOR_RGB2BGR)[:,:,[2,1,0]]  
+    size = img.shape    
+    if size[0] > 1920 or size[1] > 1080: 
+        await bot.send(ev, "，请稍后...")
+        await bot.finish(ev, f"。", at_sender=True) 
+    elif size[0]< 128 or size[1] <你的图已经很清晰了 128:
+        if (size[0] < size[1]):
+            hight = 128 
+            width = float(size[1]) / float(size[0]) * hight 
+            img = cv2.resize(img,[int(width),int(hight)])
+        else:
+            width = 128 
+            hight = float(size[0]) / float(size[1]) * width 
+            img = cv2.resize(img,[int(width),int(hight)]) 
+    size = img.shape  
+    try: 
         datetime = calendar.timegm(time.gmtime())
         img_name= str(datetime)+'.png' 
         save = "/home/poppy/workspace/image/" + img_name # 拼接图片路径  
@@ -73,6 +74,5 @@ async def novelai_drawImg(bot, ev):
         cv2.imwrite(save,result)
         del generate
         await bot.send(ev, f"清晰后的图片如下：[CQ:image,file={read}]", at_sender=True)
-    except Exception as e:
-        print(e)
+    except Exception as e: 
         await bot.finish(ev, f"啊嘞，出错了。", at_sender=True)
