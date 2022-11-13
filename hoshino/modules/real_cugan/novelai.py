@@ -52,6 +52,8 @@ async def novelai_drawImg(bot, ev):
         im = Image.open(BytesIO(i)) 
         img = cv2.cvtColor(numpy.asarray(im),cv2.COLOR_RGB2BGR)[:,:,[2,1,0]]  
         size = img.shape 
+        if size[0] > 1920 or size[1] > 1080:
+            await bot.finish(ev, f"你的图已经很清晰了。", at_sender=True)
         if size[0]< 128 or size[1] < 128:
             if (size[0] < size[1]):
                 hight = 128 

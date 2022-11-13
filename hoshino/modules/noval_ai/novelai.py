@@ -88,7 +88,7 @@ async def novelai_getImg(bot, ev):
                 "uc": "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry"}
         i = requests.post(endpoint, json=data).json()
     except Exception as e:
-        await bot.finish(ev, f"api请求超时，请稍后再试。{e}", at_sender=True)
+        await bot.finish(ev, f"api请求超时,请稍后再试。", at_sender=True)
     data = i["output"]
     for x in data:
         img = 'base64://' + x
@@ -98,7 +98,7 @@ async def novelai_getImg(bot, ev):
             msg_list.append(mes)
             await send_msg(msg_list, ev)
         except Exception as e:
-            await bot.finish(ev, f"图片发送失败。{e}", at_sender=True)
+            await bot.finish(ev, f"图片发送失败。", at_sender=True)
 
 
 @sv.on_prefix(("以图绘图", "AI以图绘图", "以图生图", "ai画图", "画图"))
@@ -138,17 +138,17 @@ async def novelai_drawImg(bot, ev):
         data = base64.b64encode(bytes(e)).decode()
         endpoint = "http://192.168.1.3:4315/generate-stream"
         seed = random.randint(0, 2**32)
-        data = {"prompt": "masterpiece, best quality," + tag, "seed": seed, "n_samples": 1, "sampler": "k_euler_ancestral", "width": width, "height": height, "scale": 12, "steps": 28,"image":data,
+        data = {"prompt": "masterpiece, best quality," + tag, "seed": seed, "n_samples": 1, "sampler": "k_euler_ancestral", "width": width, "height": height, "scale": 12, "steps": 28, "image": data,
                 "uc": "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry"}
-        i = requests.post(endpoint, json=data).text.split("\n")[2].replace("data:", "")
+        i = requests.post(endpoint, json=data).text.split("\n")[
+            2].replace("data:", "")
     except Exception as e:
-        await bot.finish(ev, f"api请求超时，请稍后再试。{e}", at_sender=True) 
-    try: 
+        await bot.finish(ev, f"api请求超时,请稍后再试。", at_sender=True)
+    try:
         msg_list = []
-        print(type(i))
         img = 'base64://' + i
         mes = f"根据关键词【{tag}】以图绘图的图片如下：\n[CQ:image,file={img}]\nseed:{seed}"
         msg_list.append(mes)
         await send_msg(msg_list, ev)
     except Exception as e:
-        await bot.finish(ev, f"图片发送失败。{e}", at_sender=True)
+        await bot.finish(ev, f"图片发送失败。", at_sender=True)
